@@ -19,3 +19,4 @@
 2. git commit -m '커밋 내용'
 3. git push -u origin develop
 4. git fetch upstream develop
+5. 깃허브에서 Full request
