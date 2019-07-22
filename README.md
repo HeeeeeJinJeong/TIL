@@ -1,6 +1,7 @@
 # TIL
 
-### python
-### django
-### git
-### rest api
+### Algorithm
+### Python
+### Django
+### Dit
+### Rest API
