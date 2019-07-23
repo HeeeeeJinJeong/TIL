@@ -1,0 +1,9 @@
+```python
+/config
+*.pyc
+*~
+/venv
+__pycache__
+db.sqlite3
+.DS_Store
+```
