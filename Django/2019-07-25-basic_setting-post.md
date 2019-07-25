@@ -94,6 +94,10 @@ STATIC_URL = 'http://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 ```
 
+### 의존성 목록 만들기, 설치하기
+- pip freeze > requirements.txt
+- pip freeze -r requirements.txt
+
 ## S3 없이
 
 
