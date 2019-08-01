@@ -99,7 +99,56 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 - pip freeze -r requirements.txt
 
 ## S3 없이
+### media
+- settings.py
+```python
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+```
+- config/urls.py
+```python
+from django.conf import settings
+from django.conf.urls.static import static
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# live 상태
+from django.views.static import server
+from django.urls import re_path
+
+urlpatterns = [
+    # ...
+    re_path(r'^media/(?P<path>.*)$', server, {'document_root':settings.MEDIA_ROOT}),
+]
+```
+- settings.py
+```python
+DEBUG = False
+
+ALLOWED_HOSTS = ['*']
+```
+
+### static
+- pip install whitenoise
+
+- settings.py
+```python
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # here
+]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+```
+
+- python manage.py collectstatic
 
 <hr>
 
