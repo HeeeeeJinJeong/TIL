@@ -47,6 +47,21 @@ class ShortestPath:
         self.source = src
         self.distance = dist
         self.p = p # pi or predecessor
+        
+    # recusion
+    def print_path(self, dst):
+        # base case
+        if self.source == dst:
+            print(dst, end=' ')
+            return
+
+        # 재귀
+        if sp.p[dst] != None:
+            self.print_path(self.p[dst])
+        else:
+            print('There is no path')
+            return
+        print(dst, end=' ')
 
 class Graph:
     # 이론에서는 무한대지만 구현할떄는 모든 가중치보다 충분히 큰 수를 사용
@@ -104,8 +119,8 @@ if __name__=="__main__":
     g.insert_edge(3, 1, 4)
     g.insert_edge(3, 2, 12)
 
-    source=0
-    sp=g.dijkstra(source)
+    source = 0
+    sp = g.dijkstra(source)
     for i in range(g.vertex_num):
         print(f"distance[{i}] : {sp.distance[i]}, p[{i}] : {sp.p[i]}")
     '''
@@ -114,4 +129,9 @@ if __name__=="__main__":
     distance[2] : 3, p[2] : 0
     distance[3] : 11, p[3] : 2
     '''
+    
+    dst = 3
+    print(f"path from {source} to {dst}") # path from 0 to 3
+    sp.print_path(dst) # 0 2 3
+    print()
 ```
