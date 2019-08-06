@@ -148,6 +148,22 @@ class ShortestPath:
     def __init__(self, A, path):
         self.A = A
         self.path = path
+        
+    def print_path(self, src, dst):
+        print(src, end=' ')
+        self.__print_sp(src, dst)
+        print(dst, end=' ')
+
+    # recursion
+    def __print_sp(self, i, j):
+        # base case
+        if self.path[i][j] == None:
+            return
+        
+        k = self.path[i][j]
+        self.__print_sp(i, k)
+        print(k, end=' ')
+        self.__print_sp(k, j)
 
 class Graph:
     INF = 99999
@@ -233,4 +249,8 @@ if __name__=="__main__":
     2   2   N   2   N   N
     2   N   N   1   2   N
     '''
+    
+    print("path from {} to {}".format(source, dest)) # path from 2 to 3
+    sp.print_path(source, dest) # 2 0 1 3
+    print()
 ```
