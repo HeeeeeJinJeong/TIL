@@ -13,7 +13,7 @@
 2. 모든 (출발점,목적지) 쌍
 - Floyd-Warshall 알고리즘
 
-### Dijkstra 알고리즘
+## Dijkstra 알고리즘
 1. 탐욕 알고리즘
 2. 음수 가중치가 없다.
 3. 최단 경로가 발견된 정점의 집합 S
@@ -57,7 +57,7 @@ class ShortestPath:
 
         # 재귀
         if sp.p[dst] != None:
-            self.print_path(self.p[dst])
+            self.print_path(self.p[dst]) # 전 경로
         else:
             print('There is no path')
             return
@@ -134,4 +134,103 @@ if __name__=="__main__":
     print(f"path from {source} to {dst}") # path from 0 to 3
     sp.print_path(dst) # 0 2 3
     print()
+```
+
+## Floyd-Warshall 알고리즘
+1. Dynamic Programming
+2. 모든 (출발점, 목적지) 쌍에 대한 최단 경로
+3. 정점 i에서 정점 j의 최단 경로 길이 : 𝑨𝒏−𝟏 [i][j]
+
+```python
+import copy
+
+class ShortestPath:
+    def __init__(self, A, path):
+        self.A = A
+        self.path = path
+
+class Graph:
+    INF = 99999
+
+    def __init__(self, vnum):
+        self.adjacency_matrix = [[Graph.INF for _ in range(vnum)] for _ in range(vnum)]
+        for i in range(vnum):
+            self.adjacency_matrix[i][i] = 0
+        self.vertem_num = vnum
+
+    def insert_edge(self, u, v, w):
+        self.adjacency_matrix[u][v] = w
+
+    def floyd_warshall(self):
+        # A^-1
+        A = copy.deepcopy(self.adjacency_matrix)
+        # path
+        path = [[None for _ in range(self.vertem_num)] for _ in range(self.vertem_num)]
+
+        for k in range(self.vertem_num):
+            for i in range(self.vertem_num):
+                for j in range(self.vertem_num):
+                    # A[i][j] ---> A^k-1[i][j]
+                    # A[i][k] + A[k][j] ---> A^k-1[i][k] + A^k-1[k][j]
+                    if A[i][j] > A[i][k] + A[k][j]:
+                        A[i][j] = A[i][k] + A[k][j]
+                        path[i][j] = k
+
+        return ShortestPath(A, path)
+
+if __name__=="__main__":
+    g=Graph(6)
+    g.insert_edge(0, 1, 5)
+    g.insert_edge(0, 2, 7)
+    g.insert_edge(0, 5, 9)
+    g.insert_edge(1, 3, 4)
+    g.insert_edge(1, 5, 2)
+    g.insert_edge(2, 0, 8)
+    g.insert_edge(2, 4, 6)
+    g.insert_edge(3, 0, 6)
+    g.insert_edge(3, 4, 2)
+    g.insert_edge(3, 5, 3)
+    g.insert_edge(4, 2, 3)
+    g.insert_edge(4, 5, 10)
+    g.insert_edge(5, 1, 7)
+    g.insert_edge(5, 2, 4)
+
+    source=2
+    dest=3
+
+    sp=g.floyd_warshall()
+
+    print("A mat")
+    for i in range(g.vertem_num):
+        for j in range(g.vertem_num):
+            print("{}".format(sp.A[i][j]).rjust(4), end="")
+        print()
+    print()
+
+    print("path mat")
+    for i in range(g.vertem_num):
+        for j in range(g.vertem_num):
+            if sp.path[i][j]==None:
+                print("{} ".format("N").rjust(4), end="")
+            else:
+                print("{} ".format(sp.path[i][j]).rjust(4), end="")
+        print()
+    print()
+    '''
+    A mat
+     0   5   7   9  11   7
+    10   0   6   4   6   2
+     8  13   0  17   6  15
+     6  10   5   0   2   3
+    11  16   3  20   0  10
+    12   7   4  11  10   0
+
+    path mat
+    N   N   N   1   3   1
+    3   N   5   N   3   N
+    N   0   N   1   N   1
+    N   5   4   N   N   N
+    2   2   N   2   N   N
+    2   N   N   1   2   N
+    '''
 ```
