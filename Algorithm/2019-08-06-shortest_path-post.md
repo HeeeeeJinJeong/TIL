@@ -222,6 +222,15 @@ if __name__=="__main__":
             print("{}".format(sp.A[i][j]).rjust(4), end="")
         print()
     print()
+    '''
+    A mat
+     0   5   7   9  11   7
+    10   0   6   4   6   2
+     8  13   0  17   6  15
+     6  10   5   0   2   3
+    11  16   3  20   0  10
+    12   7   4  11  10   0
+    '''
 
     print("path mat")
     for i in range(g.vertem_num):
@@ -233,14 +242,6 @@ if __name__=="__main__":
         print()
     print()
     '''
-    A mat
-     0   5   7   9  11   7
-    10   0   6   4   6   2
-     8  13   0  17   6  15
-     6  10   5   0   2   3
-    11  16   3  20   0  10
-    12   7   4  11  10   0
-
     path mat
     N   N   N   1   3   1
     3   N   5   N   3   N
