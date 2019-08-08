@@ -41,10 +41,43 @@ def shortest_path1(path, visited, d):
 
 path.append(0)
 visited[0] = True
-print(shortest_path1(path, visited, 0)) # 23
+print('shortest_path1 :', shortest_path1(path, visited, 0)) # 23
 ```
 
 - dynamic programming 으로 풀기
 ```python
+n = 5
+dist = [
+    [0, 2, 5, 3, 7],
+    [2, 0, 10, 6, 6],
+    [5, 10, 0, 4, 8],
+    [3, 6, 4, 0, 12],
+    [7, 6, 8, 12, 0]
+]
 
+cache = [[None for _ in range(1<<n)] for _ in range(n)]
+INF = 999999
+
+# 0부터 시작한다고 가정
+# shortest_path2(cur, visited) -> length
+# 현재 위치 cur 방문한 도시들 visited일 때 남은 도시를 방문하는 최소 경로의 길이
+def shortest_path2(cur, visited):
+    # base case
+    # 모두 방문했다면 처음과 끝의 경로의 길이
+    if visited == (1 << n) -1:
+        return dist[cur][0]
+
+    if cache[cur][visited] != None:
+        return cache[cur][visited]
+    cache[cur][visited] = INF
+
+    for _next in range(n):
+        # 아직 _next를 방문하지 않았다면
+        if not (visited & (1 << _next)):
+            cache[cur][visited] = min(cache[cur][visited], dist[cur][_next] + shortest_path2(_next, visited + (1 << _next)))
+
+
+    return cache[cur][visited]
+
+print('shortest_path2 :', shortest_path2(0, 1))
 ```
