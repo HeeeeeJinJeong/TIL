@@ -60,9 +60,7 @@ vacuum = true
 1. cd /var/www/django/
 2. sudo -s
 3. source venv/bin/activate
-4. pip install -r requirements.txt
-5. pip install uwsgi
-6. systemctl start nginx
-7. systemctl start uwsgi
-8. systemctl enable uwsgi
-9. systemctl restart uwsgi
+4. systemctl start nginx
+5. systemctl start uwsgi
+6. systemctl enable uwsgi
+7. systemctl restart uwsgi
