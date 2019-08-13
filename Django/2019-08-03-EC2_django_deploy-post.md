@@ -1,4 +1,5 @@
 # EC2에 장고 배포하기
+(디버그모드 False로 변경, ALLOWED_HOSTS 설정)
 
 1. EC2 -> 인스턴스 시작
 2. 다운로드 받은 키 페어 파일의 권한을 400으로 변경
@@ -9,7 +10,7 @@
 <hr>
 
 1. EC2 인스턴스에 ssh 접속
-- ssh -i ~/[키페어 파일 이름].pem ubuntu@[퍼블릭 DNS]
+- ssh -i ~/.ssh/[키페어 파일 이름].pem ubuntu@[퍼블릭 DNS]
 2. sudo apt-get update
 3. sudo apt-get install nginx
 4. sudo apt-get install vim
@@ -54,8 +55,73 @@ vacuum = true
 <hr>
 
 1. 파일질라에 소스코드 업로드
+- 프로토콜 : SFTP
+- 호스트 : 퍼블릭 DNS주소
+- 로그온 유형 : 키파일
+- 사용자 : ubuntu
+- 고급/기본 리모트 디렉토리 : /var/www/django
 
 <hr>
+
+1. cd /var/www/django/
+2. sudo -s
+3. source venv/bin/activate
+4. pip install -r requirements.txt
+5. pip install uwsgi
+6. python manage.py runserver 0:8000 (프로젝트가 구동되는지 확인)
+7. uwsgi --http :8000 --home /var/www/django/venv/ --chdir /var/www/django/ --module config.wsgi (uwsgi 모듈로 구동되는지 확인)
+8. vim /etc/systemd/system/uwsgi.service
+```vim
+[Unit]
+Description=uWSGI Emperor service
+
+[Service]
+ExecStart=/var/www/django/venv/bin/uwsgi --emperor /var/www/django/ini
+User=django
+Group=www-data
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+standardError=syslog
+
+[Install]
+WantedBy=multi-user.target
+```
+9. systemctl start uwsgi
+10. systemctl enable uwsgi
+11. systemctl status uwsgi
+12. vim /etc/nginx/sites-available/default
+```vim
+upstream django {
+        server unix:/var/www/django/run/uwsgi.sock;
+}
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        charset utf-8;
+        access_log /var/www/django/logs/access.log;
+        error_log /var/www/django/logs/error.log;
+
+
+        server_name _;
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+
+        location / {
+                include /etc/nginx/uwsgi_params;
+                uwsgi_pass django;
+        }
+
+}
+```
+13. systemctl restart nginx
+
+<hr>
+
+### 소스코드 수정시
+sudo chmod -R g+w /var/www/django
 
 1. cd /var/www/django/
 2. sudo -s
