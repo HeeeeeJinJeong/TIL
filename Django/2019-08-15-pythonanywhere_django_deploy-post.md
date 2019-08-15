@@ -14,7 +14,7 @@
 
 ### Web 설정
 1. 가상환경 경로(Bash에서 pwd로 확인)
-/home/[id]/[프로젝트명]/venv
+- /home/[id]/[프로젝트명]/venv
 
 2. pythonanywhere_com_wsgi.py
 
@@ -33,8 +33,8 @@ application = get_wsgi_application()
 ```
 
 3. static, media 경로 
-/static/	/home/[id]/[프로젝트명]/static/	 
-/media/	/home/[id]/[프로젝트명]/media/
+- /static/	/home/[id]/[프로젝트명]/static/	 
+- /media/	/home/[id]/[프로젝트명]/media/
 
 <hr>
 
