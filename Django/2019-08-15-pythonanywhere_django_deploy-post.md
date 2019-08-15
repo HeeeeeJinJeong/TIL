@@ -33,8 +33,8 @@ application = get_wsgi_application()
 ```
 
 3. static, media 경로 
-- /static/	/home/[id]/[프로젝트명]/static/	 
-- /media/	/home/[id]/[프로젝트명]/media/
+- /static/	:  /home/[id]/[프로젝트명]/static/	 
+- /media/	:  /home/[id]/[프로젝트명]/media/
 
 <hr>
 
