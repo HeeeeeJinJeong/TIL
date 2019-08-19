@@ -77,8 +77,8 @@ class MediaStorage(S3Boto3Storage):
 ```
 - config/settings.py
 ```python
-AWS_ACCESS_KEY_ID = 'AKIAUO4O7AFX7LA77ZE5'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID'
+AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY'
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'monoground.static.jjjinnn.com'
