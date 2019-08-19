@@ -26,3 +26,14 @@ urlpatterns = [
 ]
 ```
 - python manage.py collectstatic
+
+### model 에 적용
+```python
+from ckeditor.fields import RichTextField
+
+class Photo(models.Model):
+    content = RichTextField()
+```
+
+- python manage.py makemigrations
+- python manage.py migrate
