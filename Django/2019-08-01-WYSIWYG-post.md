@@ -37,3 +37,14 @@ class Photo(models.Model):
 
 - python manage.py makemigrations
 - python manage.py migrate
+
+- template
+```html
+<form action="" method="post">
+    {% csrf_token %}
+
+    {{form.media}} # here
+    {{form.as_p}}
+    <input type="submit" value="Update">
+</form>
+```
