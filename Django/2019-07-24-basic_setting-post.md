@@ -107,11 +107,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ```
 - config/urls.py
 ```python
-from django.conf import settings
-from django.conf.urls.static import static
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 # live 상태
 from django.views.static import serve
 from django.urls import re_path
@@ -120,6 +115,11 @@ urlpatterns = [
     # ...
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
+
+# 디버그 모드 일때만 작동
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
 - settings.py
 ```python
