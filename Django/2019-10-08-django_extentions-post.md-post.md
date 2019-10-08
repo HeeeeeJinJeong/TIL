@@ -13,13 +13,13 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 ```
-### 추가 모듈 설치
-* MAC
+## 추가 모듈 설치
+### MAC
 - xcode-select --install
 - brew install graphviz
 - pip install --install-option="--include-path=/usr/local/include/" --install-option="--library-path=/usr/local/lib/" pygraphviz
 
-* Ubuntu
+### Ubuntu
 - sudo apt-get install python-dev graphviz libgraphviz-dev pkg-config
 - pip install pygraphviz
 
