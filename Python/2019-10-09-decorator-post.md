@@ -10,7 +10,7 @@ def outer(org_func):
         return org_func(*args, **kwargs) # *,** unpacking / org_func 함수의 실행값 반환
     return inner
     
-@outer
+@outer 
 def func(a,b):
     return a+b
     
