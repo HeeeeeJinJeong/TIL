@@ -42,7 +42,17 @@ class TagList(TemplateView):
 
 - urls.py
 ```python
+from django.conf.urls import url
+from django.urls import path
 
+from .views import *
+
+app_name = 'blog'
+
+urlpatterns = [
+    url('(?P<tag>[^/]+(?u))/$', BlogTaggedList.as_view(), name='taggedlist'),
+
+]
 ```
 
 - templates/photo/photo_list.html
